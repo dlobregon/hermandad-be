@@ -6,7 +6,6 @@ const { ApolloServer } = require('apollo-server')
 const { ApolloServerPluginLandingPageGraphQLPlayground } = require('apollo-server-core')
 const schema = require('./src/graphql/schema')
 const resolvers = require('./src/graphql/resolvers')
-console.log(resolvers)
 
 const server = new ApolloServer({
   typeDefs: schema,
