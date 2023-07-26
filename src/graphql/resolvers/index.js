@@ -1,2 +1,7 @@
-const resolvers = require('./resolversMap')
-module.exports = resolvers
+const { devotos } = require('./devotosResolvers')
+
+module.exports = {
+  Query: {
+    devotos
+  }
+}
