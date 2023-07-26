@@ -1,7 +1,10 @@
-const { devotos } = require('./devotosResolvers')
+const { devotos, createDevoto } = require('./devotosResolvers')
 
 module.exports = {
   Query: {
     devotos
+  },
+  Mutation: {
+    createDevoto
   }
 }
