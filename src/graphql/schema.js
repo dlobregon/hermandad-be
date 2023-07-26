@@ -75,7 +75,7 @@ const schema = gql`
     }
 
     type Mutation {
-        createDevoto(dpi: Int!, 
+        createDevoto(dpi: Float!, 
             nombres: String!, 
             apellidos: String!, 
             sexo: Int!,
