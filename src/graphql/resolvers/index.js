@@ -1,10 +1,11 @@
-const { devotos, createDevoto } = require('./devotosResolvers')
+const { devotos, createDevoto, editDevoto } = require('./devotosResolvers')
 
 module.exports = {
   Query: {
     devotos
   },
   Mutation: {
-    createDevoto
+    createDevoto,
+    editDevoto
   }
 }

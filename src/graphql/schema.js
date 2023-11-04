@@ -6,14 +6,14 @@ const schema = gql`
         sexo: ID!
         nombre: String!, 
         tipo_turnos: [TipoTurno!]!
-        devotos: [Devoto!]!
+        #devotos: [Devoto!]!
     }
 
     type TipoUsuario {
         tipo_usuario: ID!
         nombre: String!
         comentario:String
-        usuarios:[Usuario!]!
+        #usuarios:[Usuario!]!
     }
 
     type Usuario {
@@ -24,8 +24,8 @@ const schema = gql`
         password: String!
         tipo_usuario: TipoUsuario!
         habilitado: Boolean!
-        tunos: [Turno!]!
-        devotos: [Devoto!]!
+        #tunos: [Turno!]!
+        #devotos: [Devoto!]!
     }
 
     type Procesion {
@@ -34,7 +34,7 @@ const schema = gql`
         fecha:  Date!
         comentario: String
         habilitado: Boolean!
-        turnos: [Turno!]!
+        #turnos: [Turno!]!
     }
 
     type Devoto {
@@ -42,12 +42,13 @@ const schema = gql`
         dpi: Float!
         nombres: String!
         apellidos: String!
-        sexo: Sexo!
+        #sexo: Sexo!
+        sexo: Int
         altura: Float
         telefono: String
         email: String
-        usuario: Usuario! 
-        turnos: [Turno!]!
+        #usuario: Usuario! 
+        #turnos: [Turno!]!
     }
 
     type TipoTurno {
@@ -55,7 +56,7 @@ const schema = gql`
         nombre: String!
         sexo: Sexo!
         direccion: String!
-        turnos: [Turno!]!
+        #turnos: [Turno!]!
     }
 
     type Turno {
@@ -76,6 +77,17 @@ const schema = gql`
 
     type Mutation {
         createDevoto(dpi: Float!, 
+            nombres: String!, 
+            apellidos: String!, 
+            sexo: Int!,
+            altura: Float, 
+            telefono: String, 
+            email: String
+        ): Devoto!
+
+        editDevoto(
+            devoto: ID!,
+            dpi: Float!, 
             nombres: String!, 
             apellidos: String!, 
             sexo: Int!,
