@@ -1,9 +1,10 @@
 const { devotos, createDevoto, editDevoto } = require('./devotosResolvers')
-const { createTurno } = require('./turnosResolvers')
+const { createTurno, turnosByProcesion } = require('./turnosResolvers')
 
 module.exports = {
   Query: {
-    devotos
+    devotos,
+    turnosByProcesion
   },
   Mutation: {
     createDevoto,

@@ -5,6 +5,11 @@ const createTurno = (parent, args, context) => {
   return turnoController.createTurno(newTurno)
 }
 
+const turnosByProcesion = (parent, args, context) => {
+  return turnoController.turnosByProcesion(args)
+}
+
 module.exports = {
-  createTurno
+  createTurno,
+  turnosByProcesion
 }
