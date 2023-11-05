@@ -64,10 +64,10 @@ const schema = gql`
         numero: Int!
         recibo: String!
         fecha: Date!
-        tipo_turno: TipoTurno!
-        usuario: Usuario!
-        devoto: Devoto!
-        procesion: Procesion!
+        tipo_turno: Int
+        usuario: Int
+        devoto: Int
+        procesion: Int
     }
 
     type Query {
@@ -95,6 +95,16 @@ const schema = gql`
             telefono: String, 
             email: String
         ): Devoto!
+
+        createTurno(
+            numero: Int!,
+            recibo: Int!,
+            fecha: Date!,
+            tipo_turno: Int!,
+            usuario: Int!,
+            devoto: Int!,
+            procesion: Int!
+        ): Turno!
     }
 `
 module.exports = schema
