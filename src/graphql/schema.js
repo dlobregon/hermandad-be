@@ -36,7 +36,7 @@ const schema = gql`
         habilitado: Boolean!
         tipo_procesion:Int!
         sexo: Int!
-        anda: Int!
+        brazos: Int!
         #turnos: [Turno!]!
     }
 
