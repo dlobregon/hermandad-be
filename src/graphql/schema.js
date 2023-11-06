@@ -34,6 +34,8 @@ const schema = gql`
         fecha:  Date!
         comentario: String
         habilitado: Boolean!
+        tipo_procesion:Int!
+        sexo: Int!
         #turnos: [Turno!]!
     }
 
@@ -84,6 +86,8 @@ const schema = gql`
     type Query {
         devotos: [Devoto]!
         usuarios: [Usuario]!
+        procesionesHabilitadas: [Procesion]!
+        procesiones: [Procesion]!
     }
 
     type Mutation {
