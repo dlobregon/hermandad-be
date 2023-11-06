@@ -16,21 +16,26 @@ const createTurno = (turno) => {
 }
 
 const turnosByProcesion = ({ procesion }) => {
-  const queryStr = `select d.dpi as dpi 
+  const queryStr = `select 
+  t.turno
+   ,d.dpi as dpi 
   ,d.nombres 
   ,d.apellidos
   ,p.nombre as nombre_procesion
   ,t.cantidad as cantidad
-  ,t.fecha
+  ,DATE_FORMAT(t.fecha, "%d-%m-%Y") as fecha
   ,t.numero as turno_numero
   from devoto d, procesion p, turno t
   where d.devoto = t.devoto
   and p.procesion = t.procesion
-  and p.procesion = ?`
+  and p.procesion = ?
+  order by t.turno desc
+  `
 
   return new Promise((resolve, reject) => {
     db.query(queryStr, [procesion], (err, rows) => {
       if (err) reject(err)
+      console.log(rows)
       resolve(rows)
     })
   })

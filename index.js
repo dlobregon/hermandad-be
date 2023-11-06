@@ -9,6 +9,16 @@ const resolvers = require('./src/graphql/resolvers')
 
 const server = new ApolloServer({
   typeDefs: schema,
+  cors: {
+    origin: '*',
+    methods: ['GET', 'HEAD', 'POST', 'OPTIONS'],
+    allowedHeaders: [
+      'Content-Type',
+      'Origin',
+      'Accept'
+    ],
+    credentials: true
+  },
   resolvers,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground]
 })

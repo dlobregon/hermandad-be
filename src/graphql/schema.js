@@ -71,6 +71,7 @@ const schema = gql`
     }
 
     type ReporteTurno {
+        turno: Int!
         dpi: Float!
         nombres: String!
         apellidos: String!
@@ -83,7 +84,6 @@ const schema = gql`
     type Query {
         devotos: [Devoto]!
         usuarios: [Usuario]!
-        turnosByProcesion(procesion: Int!) : [ReporteTurno!]!
     }
 
     type Mutation {
@@ -95,6 +95,8 @@ const schema = gql`
             telefono: String, 
             email: String
         ): Devoto!
+
+        turnosByProcesion(procesion: Int!) : [ReporteTurno!]!
 
         editDevoto(
             devoto: ID!,
