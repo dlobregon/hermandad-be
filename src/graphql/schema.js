@@ -81,7 +81,14 @@ const schema = gql`
         nombre_procesion: String!
         cantidad: Int
         fecha: Date!
-        turno_numero: Int!
+        nombre_turno: String!
+        recibo: Int
+    }
+
+    type TurnoDisponibles  {
+        tipo_turno: Int!
+        nombre: String!
+        disponibles: Int!
     }
 
     type Query {
@@ -102,6 +109,11 @@ const schema = gql`
         ): Devoto!
 
         turnosByProcesion(procesion: Int!) : [ReporteTurno!]!
+        
+        disponiblesByProcesion(
+            procesion: Int!,
+            tipo_procesion: Int!
+        ): [TurnoDisponibles]
 
         editDevoto(
             devoto: ID!,
