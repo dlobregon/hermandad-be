@@ -12,7 +12,18 @@ const getProcesionesHabilitadas = () => {
 }
 
 const getProcesiones = () => {
-  const queryStr = 'SELECT * FROM procesion;'
+  const queryStr = `
+  select 
+    procesion, 
+    nombre, 
+    habilitado, 
+    tipo_procesion, 
+    sexo, 
+    brazos, 
+    total_turnos,
+    date_format(fecha, '%d-%m-%Y') as fecha
+  from procesion;
+  `
   return new Promise((resolve, reject) => {
     db.query(queryStr, (err, results) => {
       if (err) reject(err)

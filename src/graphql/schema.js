@@ -37,6 +37,7 @@ const schema = gql`
         tipo_procesion:Int!
         sexo: Int!
         brazos: Int!
+        total_turnos: Int
         #turnos: [Turno!]!
     }
 
