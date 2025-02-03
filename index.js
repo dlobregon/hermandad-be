@@ -6,7 +6,6 @@ const { ApolloServer } = require('apollo-server')
 const { ApolloServerPluginLandingPageGraphQLPlayground } = require('apollo-server-core')
 const schema = require('./src/graphql/schema')
 const resolvers = require('./src/graphql/resolvers')
-
 const server = new ApolloServer({
   typeDefs: schema,
   cors: {
@@ -15,15 +14,19 @@ const server = new ApolloServer({
     allowedHeaders: [
       'Content-Type',
       'Origin',
-      'Accept'
+      'Accept',
+      'Authorization'
     ],
-    credentials: true
+    credentials: true,
+    exposedHeaders: ['Authorization']
   },
   resolvers,
   plugins: [ApolloServerPluginLandingPageGraphQLPlayground]
 })
-const port = process.env.PORT
-server.listen({ port }).then(({ url }) => {
+
+const port = process.env.PORT || 4000
+const host = '0.0.0.0'
+server.listen({ port, host }).then(({ url }) => {
   console.log(`🚀  Server ready at ${url}`)
 })
 

@@ -1,5 +1,12 @@
 const { devotos, createDevoto, editDevoto } = require('./devotosResolvers')
-const { createTurno, turnosByProcesion, disponiblesByProcesion } = require('./turnosResolvers')
+const {
+  createTurno,
+  turnosByProcesion,
+  disponiblesByProcesion,
+  checkDevotoExtraordinario,
+  guardarExtraordinarioProcesion,
+  guardarDevotoListaEspera
+} = require('./turnosResolvers')
 const { procesionesHabilitadas, procesiones } = require('./procesionesResolver')
 
 module.exports = {
@@ -13,6 +20,9 @@ module.exports = {
     editDevoto,
     createTurno,
     turnosByProcesion,
-    disponiblesByProcesion
+    disponiblesByProcesion,
+    checkDevotoExtraordinario,
+    guardarExtraordinarioProcesion,
+    guardarDevotoListaEspera
   }
 }

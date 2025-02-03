@@ -90,6 +90,33 @@ const schema = gql`
         tipo_turno: Int!
         nombre: String!
         disponibles: Int!
+        extraordinario: Boolean!
+    }
+
+    type TieneExtraordinario {
+        tipo_turno: Int!
+        tiene_extraordinario: Boolean!
+        en_lista_espera: Boolean!
+        ya_cuenta_extraordinario: Boolean!
+        devoto: Int!
+        devoto_extraordinario: Int!
+    }
+
+    type CortejoExtraordinario  {
+        procesion:    Int
+        tipo_turno:   Int
+        devoto:       Int
+        devoto_extraordinario: Int
+        fecha:       String!
+        consesion:   String
+        comentario:  String
+        recibo:      String
+    }
+
+    type DevotoListaEsperaProcesion {
+        tipo_turno: Int! 
+        tipo_procesion: Int! 
+        devoto: Int! 
     }
 
     type Query {
@@ -113,7 +140,7 @@ const schema = gql`
         
         disponiblesByProcesion(
             procesion: Int!,
-            tipo_procesion: Int!
+            tipo_procesion: Int!,
         ): [TurnoDisponibles]
 
         editDevoto(
@@ -137,6 +164,29 @@ const schema = gql`
             procesion: Int!, 
             cantidad: Int!
         ): Turno!
+
+        guardarExtraordinarioProcesion(
+            procesion:    Int!
+            tipo_turno:   Int!
+            devoto:       Int!
+            devoto_extraordinario: Int!
+            fecha:       String!
+            consesion:   String
+            comentario:  String
+            recibo:      String
+        ): CortejoExtraordinario!
+
+        guardarDevotoListaEspera(
+            tipo_turno: Int! 
+            tipo_procesion: Int! 
+            devoto: Int! 
+        ): DevotoListaEsperaProcesion!
+
+        checkDevotoExtraordinario(
+            devoto: Int!,
+            tipo_turno: Int!,
+            procesion: Int!
+        ): TieneExtraordinario!
     }
 `
 module.exports = schema
