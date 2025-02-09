@@ -119,6 +119,10 @@ const schema = gql`
         devoto: Int! 
     }
 
+    type DevotoClave {
+        clave: String!
+    }
+
     type Query {
         devotos: [Devoto]!
         usuarios: [Usuario]!
@@ -187,6 +191,10 @@ const schema = gql`
             tipo_turno: Int!,
             procesion: Int!
         ): TieneExtraordinario!
+
+        getClaves(
+            devoto: Int!
+        ): [DevotoClave]
     }
 `
 module.exports = schema

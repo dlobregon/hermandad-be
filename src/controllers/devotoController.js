@@ -2,7 +2,7 @@ const { getDb } = require('../../db')
 const db = getDb()
 
 const getAllDevotos = () => {
-  const queryStr = 'SELECT * FROM devoto ORDER BY devoto DESC'
+  const queryStr = 'SELECT * FROM devoto where activo = 1 ORDER BY devoto DESC'
   return new Promise((resolve, reject) => {
     db.query(queryStr, (err, results) => {
       if (err) reject(err)

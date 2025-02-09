@@ -36,11 +36,16 @@ const guardarDevotoListaEspera = (parent, args, context) => {
   return turnoController.guardarDevotoListaEspera(args)
 }
 
+const getClaves = (parent, args, context) => {
+  return turnoController.getClave(args)
+}
+
 module.exports = {
   createTurno,
   turnosByProcesion,
   disponiblesByProcesion,
   checkDevotoExtraordinario,
   guardarExtraordinarioProcesion,
-  guardarDevotoListaEspera
+  guardarDevotoListaEspera,
+  getClaves
 }

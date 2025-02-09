@@ -175,6 +175,16 @@ const checkDevotoExtraordinarioProcesion = ({ devoto, tipo_turno, procesion }) =
   })
 }
 
+const getClave = ({ devoto }) => {
+  const queryStr = 'select clave from clave_procesion_devoto cpd  where cpd.devoto = ?'
+  return new Promise((resolve, reject) => {
+    db.query(queryStr, [devoto], (err, results) => {
+      if (err) reject(err)
+      resolve(results)
+    })
+  })
+}
+
 module.exports = {
   createTurno,
   turnosByProcesion,
@@ -183,5 +193,6 @@ module.exports = {
   guardarExtraordinarioProcesion,
   guardarDevotoListaEspera,
   checkDevotoListaEspera,
-  checkDevotoExtraordinarioProcesion
+  checkDevotoExtraordinarioProcesion,
+  getClave
 }
