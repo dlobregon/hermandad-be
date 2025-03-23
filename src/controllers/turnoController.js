@@ -185,6 +185,36 @@ const getClave = ({ devoto }) => {
   })
 }
 
+const getClavesDetalleTipoTurno = ({ devoto }) => {
+  const queryStr = `
+  SELECT
+    tt.nombre as nombre_tipo_turno,
+    ctt.codigo as clave,
+    CASE
+        WHEN EXISTS (
+            SELECT 1
+            FROM compra_clave_turno cct
+            WHERE cct.clave_id = ctt.clave_id
+            AND cct.anio = EXTRACT(YEAR FROM CURRENT_DATE)
+        ) THEN FALSE
+        ELSE TRUE
+    END AS disponible
+  FROM
+      clave_tipo_turno ctt
+  JOIN tipo_turno tt ON tt.tipo_turno = ctt.tipo_turno
+  JOIN devoto d ON d.devoto = ctt.devoto
+  WHERE
+      d.devoto = ?
+  `
+  return new Promise((resolve, reject) => {
+    db.query(queryStr, [devoto], (err, results) => {
+      if (err) reject(err)
+      resolve(results)
+    })
+  }
+  )
+}
+
 module.exports = {
   createTurno,
   turnosByProcesion,
@@ -194,5 +224,6 @@ module.exports = {
   guardarDevotoListaEspera,
   checkDevotoListaEspera,
   checkDevotoExtraordinarioProcesion,
-  getClave
+  getClave,
+  getClavesDetalleTipoTurno
 }

@@ -6,7 +6,8 @@ const {
   checkDevotoExtraordinario,
   guardarExtraordinarioProcesion,
   guardarDevotoListaEspera,
-  getClaves
+  getClaves,
+  getClavesDetalleTipoTurno
 } = require('./turnosResolvers')
 const { procesionesHabilitadas, procesiones } = require('./procesionesResolver')
 
@@ -25,6 +26,7 @@ module.exports = {
     checkDevotoExtraordinario,
     guardarExtraordinarioProcesion,
     guardarDevotoListaEspera,
-    getClaves
+    getClaves,
+    getClavesDetalleTipoTurno
   }
 }

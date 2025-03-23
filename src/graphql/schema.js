@@ -122,6 +122,12 @@ const schema = gql`
     type DevotoClave {
         clave: String!
     }
+    
+    type DetalleTipoTurnoClave {
+        nombre_tipo_turno: String!
+        clave: String!
+        disponible: Boolean!
+    }
 
     type Query {
         devotos: [Devoto]!
@@ -195,6 +201,10 @@ const schema = gql`
         getClaves(
             devoto: Int!
         ): [DevotoClave]
+
+        getClavesDetalleTipoTurno(
+            devoto: Int!
+        ): [DetalleTipoTurnoClave]
     }
 `
 module.exports = schema
