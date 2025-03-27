@@ -127,6 +127,25 @@ const schema = gql`
         nombre_tipo_turno: String!
         clave: String!
         disponible: Boolean!
+        clave_id: Int
+    }
+
+    type ResultadoNuevaClave {
+            devoto: Int!
+            codigo: String!
+            tipo_turno: Int!
+    }
+    
+    type ComprarClaveResultado {
+        clave_id: Int!
+    }
+
+    
+    type Inscripcion {
+        devoto: Int
+        comentarios: String
+        cantidad: Int
+        claves: [Int]
     }
 
     type Query {
@@ -203,8 +222,27 @@ const schema = gql`
         ): [DevotoClave]
 
         getClavesDetalleTipoTurno(
-            devoto: Int!
+            devoto: Int!,
+            tipo_turno: Int!
         ): [DetalleTipoTurnoClave]
+
+        agregarNuevaClave(
+            devoto: Int!
+            codigo: String!
+            tipo_turno: Int!
+        ): ResultadoNuevaClave!
+
+        comprarClave(
+            clave_id: Int!
+        ): ComprarClaveResultado!
+
+        inscribir(
+            devoto: Int!
+            comentarios: String
+            cantidad: Int
+            claves: [Int]
+        ): Inscripcion
+
     }
 `
 module.exports = schema

@@ -185,11 +185,12 @@ const getClave = ({ devoto }) => {
   })
 }
 
-const getClavesDetalleTipoTurno = ({ devoto }) => {
+const getClavesDetalleTipoTurno = ({ devoto, tipo_turno }) => {
   const queryStr = `
   SELECT
     tt.nombre as nombre_tipo_turno,
     ctt.codigo as clave,
+    ctt.clave_id as clave_id,
     CASE
         WHEN EXISTS (
             SELECT 1
@@ -205,14 +206,103 @@ const getClavesDetalleTipoTurno = ({ devoto }) => {
   JOIN devoto d ON d.devoto = ctt.devoto
   WHERE
       d.devoto = ?
+      AND tt.tipo_turno = ?
   `
   return new Promise((resolve, reject) => {
-    db.query(queryStr, [devoto], (err, results) => {
+    db.query(queryStr, [devoto, tipo_turno], (err, results) => {
       if (err) reject(err)
       resolve(results)
     })
   }
   )
+}
+
+const agregarNuevaClave = ({ devoto, tipo_turno, codigo }) => {
+  const queryStr = `
+  INSERT INTO clave_tipo_turno (clave_id, codigo, tipo_turno, devoto)
+  VALUES
+  (0, ?, ?, ?)`
+  return new Promise((resolve, reject) => {
+    db.query(queryStr, [codigo, tipo_turno, devoto], (err, results) => {
+      if (err) reject(err)
+      console.log(results)
+      resolve({ devoto, tipo_turno, codigo })
+    })
+  })
+}
+
+const comprarClave = ({ clave_id }) => {
+  const queryStr = `
+  INSERT INTO
+    compra_clave_turno
+    (compra_clave_turno, clave_id, anio)
+    VALUES (0, ?, YEAR(CURRENT_DATE()))
+  `
+  return new Promise((resolve, reject) => {
+    db.query(queryStr, [clave_id], (err, results) => {
+      if (err) reject(err)
+      resolve({ clave_id })
+    })
+  })
+}
+
+const inscribir = (info) => {
+  const {
+    devoto,
+    comentarios,
+    cantidad,
+    claves
+  } = info
+
+  return new Promise((resolve, reject) => {
+    db.beginTransaction((err) => {
+      if (err) return reject(err)
+
+      const queryStrInscripcion = `
+      INSERT INTO
+        inscripcion
+        (inscripcion, devoto, comentarios, cantidad)
+        VALUES (0, ?, ?, ?)
+      `
+
+      db.query(queryStrInscripcion, [devoto, comentarios, cantidad], (err, results) => {
+        if (err) {
+          return db.rollback(() => reject(err))
+        }
+
+        const inscripcionId = results.insertId
+
+        const queryStrCompraClave = `
+        INSERT INTO
+          compra_clave_turno
+          (compra_clave_turno, clave_id, inscripcion, anio)
+          VALUES (0, ?, ?, YEAR(CURRENT_DATE()))
+        `
+
+        const compraClavePromises = claves.map((clave_id) => {
+          return new Promise((resolve, reject) => {
+            db.query(queryStrCompraClave, [clave_id, inscripcionId], (err) => {
+              if (err) return reject(err)
+              resolve()
+            })
+          })
+        })
+
+        Promise.all(compraClavePromises)
+          .then(() => {
+            db.commit((err) => {
+              if (err) {
+                return db.rollback(() => reject(err))
+              }
+              resolve({ devoto, comentarios, cantidad, inscripcionId, claves })
+            })
+          })
+          .catch((err) => {
+            db.rollback(() => reject(err))
+          })
+      })
+    })
+  })
 }
 
 module.exports = {
@@ -225,5 +315,8 @@ module.exports = {
   checkDevotoListaEspera,
   checkDevotoExtraordinarioProcesion,
   getClave,
-  getClavesDetalleTipoTurno
+  getClavesDetalleTipoTurno,
+  agregarNuevaClave,
+  comprarClave,
+  inscribir
 }

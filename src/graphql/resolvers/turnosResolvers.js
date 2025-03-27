@@ -44,6 +44,18 @@ const getClavesDetalleTipoTurno = (parent, args, context) => {
   return turnoController.getClavesDetalleTipoTurno(args)
 }
 
+const agregarNuevaClave = (parent, args, context) => {
+  return turnoController.agregarNuevaClave(args)
+}
+
+const comprarClave = (parent, args, context) => {
+  return turnoController.comprarClave(args)
+}
+
+const inscribir = (parent, args, context) => {
+  return turnoController.inscribir(args)
+}
+
 module.exports = {
   createTurno,
   turnosByProcesion,
@@ -52,5 +64,8 @@ module.exports = {
   guardarExtraordinarioProcesion,
   guardarDevotoListaEspera,
   getClaves,
-  getClavesDetalleTipoTurno
+  getClavesDetalleTipoTurno,
+  agregarNuevaClave,
+  comprarClave,
+  inscribir
 }
